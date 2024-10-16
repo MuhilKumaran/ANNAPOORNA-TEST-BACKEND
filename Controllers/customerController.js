@@ -273,16 +273,16 @@ const orderReceivedMessage = async (messageData) => {
     );
 
     // Send message to admin
-    const adminResponse = await axios.post(
-      "https://backend.aisensy.com/campaign/t1/api/v2",
-      adminData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log("Message sent to admin successfully:", adminResponse.data);
+    // const adminResponse = await axios.post(
+    //   "https://backend.aisensy.com/campaign/t1/api/v2",
+    //   adminData,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // console.log("Message sent to admin successfully:", adminResponse.data);
   } catch (error) {
     console.error(
       "Error sending message:",
