@@ -673,19 +673,19 @@ exports.verifyOrder = async (req, res) => {
       });
 
       const order_id = resultId[0].order_id;
-      const order = {
-        orderIdrec: order_id,
-        orderDate: currentDate,
-        preOrderDate: preOrderDate,
-        paymentMethod: "Online",
-        customerName: userName,
-        customerAddress: address,
-        customerMobile: mobile,
-        customerEmail: email,
-        orderItems: orderItems,
-        itemTotal: totalAmount,
-        finalAmount: finalTotalAmount,
-      };
+      // const order = {
+      //   orderIdrec: order_id,
+      //   orderDate: currentDate,
+      //   preOrderDate: preOrderDate,
+      //   paymentMethod: "Online",
+      //   customerName: userName,
+      //   customerAddress: address,
+      //   customerMobile: mobile,
+      //   customerEmail: email,
+      //   orderItems: orderItems,
+      //   itemTotal: totalAmount,
+      //   finalAmount: finalTotalAmount,
+      // };
       // const html = await ejs.renderFile(
       //   path.join(__dirname, "views", "bill.ejs"),
       //   { order }
@@ -741,6 +741,8 @@ exports.verifyOrder = async (req, res) => {
       } = billData;
 
       console.log("bill data:", billData);
+      console.log("Order Items");
+      console.log(orderItems);
       const receipt = ` <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -1179,7 +1181,7 @@ exports.cancelOrder = async (req, res) => {
       console.log(authToken);
       console.log("refund hit");
       const response = axios.post(
-        "https://annapoorna-test-backend.onrender.com/customers/refund-order",
+        "https://www.annapoornamithai.com/customers/refund-order",
         { order_id },
         {
           headers: {
