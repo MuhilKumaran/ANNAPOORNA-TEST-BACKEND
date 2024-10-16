@@ -613,6 +613,8 @@ exports.verifyOrder = async (req, res) => {
     delivery,
     user_mobile,
     preorderDate,
+    sweetGST,
+    savoriesGST
   } = req.body;
 
   console.log("body in verify order route:", req.body);
