@@ -714,7 +714,10 @@ exports.verifyOrder = async (req, res) => {
 
       // Configure Nodemailer for email sending
       console.log("gereating receipt");
-
+      let totalQuantity = 0;
+      orderItems.forEach((item) => {
+        totalQuantity += item.quantity;
+      });
       const billData = {
         orderIdrec: order_id,
         orderDate: currentDate,
@@ -831,10 +834,9 @@ exports.verifyOrder = async (req, res) => {
               <tr class="line">
                 <th>Item</th>
                 <th>Qty</th>
-                <th>GST %</th>
-                <th>GST ₹</th>
                 <th>Price/Qty</th>
-                <th>Total Amount</th>
+                <th>GST</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -844,10 +846,14 @@ exports.verifyOrder = async (req, res) => {
                 <tr>
                   <td>${item.name}</td>
                   <td>${item.quantity}</td>
-                  <td>${item.gst}</td>
-                  <td>${(item.price * item.gst) / 100}</td>
-                  <td>₹${(Number(item.price) / item.quantity).toFixed(2)}</td>
                   <td>₹${item.price}</td>
+                  <td>₹${(item.totalprice * item.gst) / 100}  (${
+                    item.gst
+                  }%)</td>
+                  <td>₹${(
+                    item.totalprice +
+                    (item.price * item.gst) / 100
+                  ).toFixed(2)}</td>
                 </tr>
               `
                 )
@@ -855,19 +861,33 @@ exports.verifyOrder = async (req, res) => {
             </tbody>
             <tfoot>
               <tr class="lineup">
-                <td colspan="5">Item Total</td>
-                <td>₹${itemTotal}</td>
-              </tr>
-              <tr class="line">
-                <td colspan="5">Total GST</td>
+                <td>Total</td>
+                <td colspan="2">₹${totalQuantity}</td>
                 <td>₹${gst}</td>
-              </tr>
-              <tr class="line">
-                <td colspan="5">Delivery</td>
-                <td>₹${delivery}</td>
+                <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
               </tr>
               <tr>
-                <td colspan="5"><strong>Total</strong></td>
+                <td colspan="4">Sub Total</td>
+                <td>${(Number(finalAmount)-Number(gst)).toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colspan="4">SGST @2.5%</td>
+                <td>${((Number(sweetGST))/2).toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colspan="4">CGST @2.5%</td>
+                <td>${((Number(sweetGST))/2).toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colspan="4">SGST @6%</td>
+                <td>${((Number(savoriesGST))/2).toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colspan="4">CGST @6%</td>
+                <td>${((Number(savoriesGST))/2).toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colspan="4"><strong>Total</strong></td>
                 <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
               </tr>
             </tfoot>
