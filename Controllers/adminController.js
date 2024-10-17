@@ -232,7 +232,7 @@ exports.manageOrder = async (req, res) => {
   try {
     const { order_id, delivery_status } = req.body;
     const dateField = {
-      processing: "processed_date",
+      processing: "processing_date",
       shipped: "shipped_date",
       delivered: "delivered_date",
     };
