@@ -236,7 +236,7 @@ exports.manageOrder = async (req, res) => {
       shipped: "shipped_date",
       delivered: "delivered_date",
     };
-    const date_update = dateField.get(delivery_status);
+    const date_update = dateField[delivery_status];
     const cancellation = 0;
 
     const currentDate = new Date();
