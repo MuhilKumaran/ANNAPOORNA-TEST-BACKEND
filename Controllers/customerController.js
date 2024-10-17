@@ -715,7 +715,7 @@ exports.verifyOrder = async (req, res) => {
       // console.log("bill data:", billData);
 
       // Configure Nodemailer for email sending
-      
+
       console.log("gereating receipt");
       let totalQuantity = 0;
       orderItems.forEach((item) => {
@@ -776,11 +776,14 @@ exports.verifyOrder = async (req, res) => {
         }
         .details-container {
           display: flex;
-          justify-content: "space-between";
+          justify-content: space-between;
         }
-        // .order-details {
-        //   width: 48%;
-        // }
+        .order-details {
+          width: 40%;
+        }
+        .company-details {
+          width: 40%;
+        }
         .order-summary table {
           width: 100%;
           border-collapse: collapse;
@@ -859,12 +862,12 @@ exports.verifyOrder = async (req, res) => {
                   <td>${item.name}</td>
                   <td>${item.quantity}</td>
                   <td>₹${item.price}</td>
-                  <td>₹${((item.price*item.quantity) * item.gst) / 100}  (${
+                  <td>₹${(item.price * item.quantity * item.gst) / 100}  (${
                     item.gst
                   }%)</td>
                   <td>₹${(
-                    (item.price*item.quantity) +
-                    ((item.price*item.quantity) * item.gst) / 100
+                    item.price * item.quantity +
+                    (item.price * item.quantity * item.gst) / 100
                   ).toFixed(2)}</td>
                 </tr>
               `
@@ -876,12 +879,18 @@ exports.verifyOrder = async (req, res) => {
                 <td>Total</td>
                 <td colspan="2">${totalQuantity}</td>
                 <td>₹${gst}</td>
-                <td><strong>₹${(Number(finalAmount)-Number(delivery)).toFixed(2)}</strong></td>
+                <td><strong>₹${(Number(finalAmount) - Number(delivery)).toFixed(
+                  2
+                )}</strong></td>
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
                 <td >Sub Total</td>
-                <td>${(Number(finalAmount) - Number(gst) - Number(delivery)).toFixed(2)}</td>
+                <td>${(
+                  Number(finalAmount) -
+                  Number(gst) -
+                  Number(delivery)
+                ).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
