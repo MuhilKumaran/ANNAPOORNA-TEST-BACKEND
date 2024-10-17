@@ -872,27 +872,33 @@ exports.verifyOrder = async (req, res) => {
                 <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
               </tr>
               <tr class="lineup">
-                <td colspan="4" class="right-align">Sub Total</td>
+                <td colspan="3"></td>
+                <td >Sub Total</td>
                 <td>${(Number(finalAmount) - Number(gst)).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
-                <td colspan="4" class="right-align">SGST @2.5%</td>
+                <td colspan="3"></td>
+                <td>SGST @2.5%</td>
                 <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
-                <td colspan="4" class="right-align">CGST @2.5%</td>
+                <td colspan="3"></td>
+                <td>CGST @2.5%</td>
                 <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
-                <td colspan="4" class="right-align">SGST @6%</td>
+                <td colspan="3"></td>
+                <td>SGST @6%</td>
                 <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
-                <td colspan="4" class="right-align">CGST @6%</td>
+                <td colspan="3"></td>
+                <td>CGST @6%</td>
                 <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
-                <td colspan="4" class="right-align"><strong>Total</strong></td>
+                <td colspan="3"></td>
+                <td><strong>Total</strong></td>
                 <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
               </tr>
             </tfoot>
