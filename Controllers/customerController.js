@@ -809,7 +809,7 @@ exports.verifyOrder = async (req, res) => {
           <h3>Annapoorna Mithai</h3>
           <p>
             Annapoorna Mithai, 12/2, Ramnagar, Bypass road, Madurai <br />
-            Contact: annapoornamithai@gmail.com           GSTIN - 33BCTPA8028E2ZP
+            Contact: annapoornamithai@gmail.com        GSTIN - 33BCTPA8028E2ZP
           </p>
         </div>
         <hr />
@@ -872,27 +872,27 @@ exports.verifyOrder = async (req, res) => {
                 <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
               </tr>
               <tr class="lineup">
-                <td colspan="4 right-align">Sub Total</td>
+                <td colspan="4" class="right-align">Sub Total</td>
                 <td>${(Number(finalAmount) - Number(gst)).toFixed(2)}</td>
               </tr>
-              <tr class="lineup right-align">
-                <td colspan="4">SGST @2.5%</td>
+              <tr class="lineup">
+                <td colspan="4" class="right-align">SGST @2.5%</td>
                 <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
               </tr>
-              <tr class="lineup right-align">
-                <td colspan="4">CGST @2.5%</td>
+              <tr class="lineup">
+                <td colspan="4" class="right-align">CGST @2.5%</td>
                 <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
               </tr>
-              <tr class="lineup right-align">
-                <td colspan="4">SGST @6%</td>
+              <tr class="lineup">
+                <td colspan="4" class="right-align">SGST @6%</td>
                 <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
-              <tr class="lineup right-align">
-                <td colspan="4">CGST @6%</td>
+              <tr class="lineup">
+                <td colspan="4" class="right-align">CGST @6%</td>
                 <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
-              <tr class="lineup right-align">
-                <td colspan="4"><strong>Total</strong></td>
+              <tr class="lineup">
+                <td colspan="4" class="right-align"><strong>Total</strong></td>
                 <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
               </tr>
             </tfoot>
