@@ -776,11 +776,11 @@ exports.verifyOrder = async (req, res) => {
         }
         .details-container {
           display: flex;
-          justify-content: space-between;
+          justify-content: "space-between";
         }
-        .order-details {
-          width: 48%;
-        }
+        // .order-details {
+        //   width: 48%;
+        // }
         .order-summary table {
           width: 100%;
           border-collapse: collapse;
@@ -859,12 +859,12 @@ exports.verifyOrder = async (req, res) => {
                   <td>${item.name}</td>
                   <td>${item.quantity}</td>
                   <td>₹${item.price}</td>
-                  <td>₹${(item.totalprice * item.gst) / 100}  (${
+                  <td>₹${((item.price*item.quantity) * item.gst) / 100}  (${
                     item.gst
                   }%)</td>
                   <td>₹${(
-                    item.totalprice +
-                    (item.price * item.gst) / 100
+                    (item.price*item.quantity) +
+                    ((item.price*item.quantity) * item.gst) / 100
                   ).toFixed(2)}</td>
                 </tr>
               `
@@ -885,13 +885,18 @@ exports.verifyOrder = async (req, res) => {
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
+                <td>CGST @2.5%</td>
+                <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
+              </tr>
+              <tr class="lineup">
+                <td colspan="3"></td>
                 <td>SGST @2.5%</td>
                 <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
-                <td>CGST @2.5%</td>
-                <td>${(Number(sweetGST) / 2).toFixed(2)}</td>
+                <td>CGST @6%</td>
+                <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
@@ -899,11 +904,6 @@ exports.verifyOrder = async (req, res) => {
                 <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
-                <td colspan="3"></td>
-                <td>CGST @6%</td>
-                <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
-              </tr>
-              <tr class="lineupp">
               <td colspan="3"></td>
                 <td>Delivery</td>
                 <td>₹${delivery}</td>
