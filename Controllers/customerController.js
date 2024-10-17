@@ -611,6 +611,7 @@ exports.verifyOrder = async (req, res) => {
     mobile,
     gst,
     delivery,
+    state,
     user_mobile,
     preorderDate,
     sweetGST,
@@ -623,7 +624,6 @@ exports.verifyOrder = async (req, res) => {
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(`${razorpayOrderId}|${paymentId}`)
     .digest("hex");
-
   const finalTotalAmount = Number(totalAmount) + Number(gst) + Number(delivery);
 
   if (generatedSignature === razorpaySignature) {
@@ -715,6 +715,7 @@ exports.verifyOrder = async (req, res) => {
       // console.log("bill data:", billData);
 
       // Configure Nodemailer for email sending
+      
       console.log("gereating receipt");
       let totalQuantity = 0;
       orderItems.forEach((item) => {
@@ -744,6 +745,9 @@ exports.verifyOrder = async (req, res) => {
         itemTotal,
         finalAmount,
       } = billData;
+
+      const billdate = orderDate.toISOString().split("T")[0];
+      const billtime = orderDate.toTimeString().split(" ")[0];
 
       console.log("bill data:", billData);
       console.log("Order Items");
@@ -805,15 +809,15 @@ exports.verifyOrder = async (req, res) => {
     </head>
     <body>
       <div class="invoice">
-        <div class="company-details">
-          <h3>Annapoorna Mithai</h3>
-          <p>
-            Annapoorna Mithai, 12/2, Ramnagar, Bypass road, Madurai <br />
-            Contact: annapoornamithai@gmail.com        GSTIN - 33BCTPA8028E2ZP
-          </p>
-        </div>
-        <hr />
         <div class="details-container">
+          <div class="company-details">
+            <h3>Annapoorna Mithai</h3>
+            <p>
+              Annapoorna Mithai, 12/2, Ramnagar, Bypass road, Madurai <br />
+              Contact: annapoornamithai@gmail.com  <br/>      
+              GSTIN - 33BCTPA8028E2ZP
+            </p>
+          </div>
           <div class="order-details">
             <h3>Order details</h3>
             <p>Order Id : ${orderIdrec}</p>
@@ -821,6 +825,9 @@ exports.verifyOrder = async (req, res) => {
             <p>Payment: ${paymentMethod}</p>
             ${preOrderDate ? `<p>Pre-Order Date: ${preOrderDate}</p>` : ""}
           </div>
+        </div>
+        <hr />
+        <div >
           <div class="customer-details">
             <h3>Customer details</h3>
             <p>
@@ -867,14 +874,14 @@ exports.verifyOrder = async (req, res) => {
             <tfoot>
               <tr class="lineup">
                 <td>Total</td>
-                <td colspan="2">₹${totalQuantity}</td>
+                <td colspan="2">${totalQuantity}</td>
                 <td>₹${gst}</td>
-                <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
+                <td><strong>₹${(Number(finalAmount)-Number(delivery)).toFixed(2)}</strong></td>
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
                 <td >Sub Total</td>
-                <td>${(Number(finalAmount) - Number(gst)).toFixed(2)}</td>
+                <td>${(Number(finalAmount) - Number(gst) - Number(delivery)).toFixed(2)}</td>
               </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
@@ -896,11 +903,16 @@ exports.verifyOrder = async (req, res) => {
                 <td>CGST @6%</td>
                 <td>${(Number(savoriesGST) / 2).toFixed(2)}</td>
               </tr>
+              <tr class="lineupp">
+              <td colspan="3"></td>
+                <td>Delivery</td>
+                <td>₹${delivery}</td>
+              </tr>
               <tr class="lineup">
                 <td colspan="3"></td>
                 <td><strong>Total</strong></td>
                 <td><strong>₹${Number(finalAmount).toFixed(2)}</strong></td>
-              </tr>
+              </tr> 
             </tfoot>
           </table>
         </div>

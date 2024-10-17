@@ -231,12 +231,30 @@ const orderDeliveredMessage = async (messageData) => {
 exports.manageOrder = async (req, res) => {
   try {
     const { order_id, delivery_status } = req.body;
+    const dateField = {
+      processing: "processed_date",
+      shipped: "shipped_date",
+      delivered: "delivered_date",
+    };
+    const date_update = dateField.get(delivery_status);
     const cancellation = 0;
-    const sql = `UPDATE customer_orders SET order_status = ?,customer_cancellation = ? WHERE order_id = ?`;
+
+    const currentDate = new Date();
+
+    // Extract the day, month, and year
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+    const year = currentDate.getFullYear(); // Get the full year
+
+    // Combine them to form the DD-MM-YYYY format
+    const formattedDate = `${day}-${month}-${year}`;
+
+    const sql = `UPDATE customer_orders SET order_status = ?,customer_cancellation = ?,${date_update} = ? WHERE order_id = ?`;
+    console.log(sql);
     const updateResult = await new Promise((resolve, reject) => {
       db.query(
         sql,
-        [delivery_status, cancellation, order_id],
+        [delivery_status, cancellation, formattedDate, order_id],
         (err, result) => {
           if (err) {
             return reject(err);
