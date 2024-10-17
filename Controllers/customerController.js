@@ -776,13 +776,13 @@ exports.verifyOrder = async (req, res) => {
         }
         .details-container {
           display: flex;
-          justify-content: space-between;
+          gap:40px
         }
         .order-details {
           width: 40%;
         }
         .company-details {
-          width: 40%;
+          width: 50%;
         }
         .order-summary table {
           width: 100%;
